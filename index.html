@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoQuiz Brasil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🇧🇷</text></svg>">
+</head>
+<body>
+
+    <div id="app-container">
+
+        <div id="start-screen" class="screen text-center">
+            <h1 class="start-screen__title">GeoQuiz Brasil</h1>
+            <p class="start-screen__subtitle">Teste seus conhecimentos sobre as bandeiras do Brasil!</p>
+            <div id="main-menu" class="main-menu">
+                 <button data-type="marathon" class="btn btn--primary solid-shadow">Jogar Maratona</button>
+                 <button data-type="region" class="btn btn--secondary solid-shadow">Jogar por Região</button>
+                 <button id="start-screen-settings-btn" class="btn btn--secondary solid-shadow">Configurações</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div class="game-header">
+                <div class="game-status-bar">
+                    <button id="ingame-back-btn" class="btn btn--secondary btn--small solid-shadow">Parar</button>
+                    <div id="progress-bar" class="progress-bar">
+                        <div id="progress-bar-inner" class="progress-bar__inner">
+                            <span id="combo-text" class="combo-text">1X</span>
+                        </div>
+                    </div>
+                    <div class="lives-container">
+                        <svg class="icon icon--heart" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+                        <span id="tries-count" class="lives-container__count">3</span>
+                        <button id="settings-btn" class="settings-btn">
+                            <svg class="icon icon--settings" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="stats-bar font-mono-custom">
+                    <div class="stat-item">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timer">00:00</span>
+                    </div>
+                     | 
+                    <div class="stat-item">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        <span>Média: <span id="avg-time">0.0s</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <p id="question-text" class="question-text">Qual estado tem esta bandeira?</p>
+                <div id="normal-mode-question" class="flag-container">
+                    <img id="flag-image" src="" alt="Bandeira do estado" class="flag-image">
+                </div>
+            </div>
+            
+            <div class="options-section">
+                <div id="normal-mode-options">
+                    <div id="options-grid-normal" class="options-grid"></div>
+                </div>
+                <div id="reverse-mode-options" class="hidden">
+                    <div id="options-grid-reverse" class="options-grid"></div>
+                </div>
+                <div id="feedback-message" class="feedback-message"></div>
+            </div>
+        </div>
+
+
+        <div id="end-screen" class="screen hidden text-center">
+            <h2 class="end-screen__title">Fim de Jogo!</h2>
+            <div class="final-stats-card">
+                <div class="final-stats-grid">
+                    <div>
+                        <p class="stat-label">PONTUAÇÃO</p>
+                        <p id="final-score" class="stat-value stat-value--highlight"></p>
+                    </div>
+                    <div class="font-mono-custom">
+                        <p class="stat-label">TEMPO TOTAL</p>
+                        <p id="total-time-end" class="stat-value"></p>
+                    </div>
+                    <div class="font-mono-custom">
+                        <p class="stat-label">MÉDIA</p>
+                        <p id="avg-time-end" class="stat-value"></p>
+                    </div>
+                </div>
+            </div>
+            <p id="practice-suggestion" class="suggestion-text"></p>
+            <button id="play-again-btn" class="btn btn--primary solid-shadow">Jogar Novamente</button>
+        </div>
+    </div>
+    
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    
+    <div id="mode-modal" class="modal hidden">
+        <button id="mode-modal-back-btn" class="modal__close-btn">&times;</button>
+        <h3 class="modal__title">Escolha o Modo de Jogo</h3>
+        <div class="modal__grid">
+            <div id="mode-normal-btn" class="mode-card">
+                <h4 class="mode-card__title">Modo Normal</h4>
+                <p class="mode-card__description">Adivinhe o nome do estado pela bandeira.</p>
+                <div class="mode-card__illustration">
+                    <div class="illustration__flag-placeholder">Bandeira</div>
+                    <div class="illustration__options-grid">
+                        <div class="illustration__option"></div>
+                        <div class="illustration__option"></div>
+                        <div class="illustration__option sm-hidden"></div>
+                        <div class="illustration__option sm-hidden"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="mode-reverse-btn" class="mode-card">
+                <h4 class="mode-card__title">Modo Reverso</h4>
+                <p class="mode-card__description">Adivinhe a bandeira pelo nome do estado.</p>
+                <div class="mode-card__illustration">
+                    <div class="illustration__text-placeholder">Nome do Estado</div>
+                    <div class="illustration__options-grid">
+                        <div class="illustration__option--img"></div>
+                        <div class="illustration__option--img"></div>
+                        <div class="illustration__option--img sm-hidden"></div>
+                        <div class="illustration__option--img sm-hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="region-modal" class="modal hidden">
+        <button id="region-modal-back-btn" class="modal__close-btn">&times;</button>
+        <h3 class="modal__title">Escolha uma Região</h3>
+        <div id="modal-region-selection" class="region-grid">
+            <button data-region="Norte" class="btn btn--secondary solid-shadow">Norte</button>
+            <button data-region="Nordeste" class="btn btn--secondary solid-shadow">Nordeste</button>
+            <button data-region="Centro-Oeste" class="btn btn--secondary solid-shadow">Centro-Oeste</button>
+            <button data-region="Sudeste" class="btn btn--secondary solid-shadow">Sudeste</button>
+            <button data-region="Sul" class="btn btn--secondary solid-shadow">Sul</button>
+        </div>
+    </div>
+
+    <div id="quit-modal" class="modal text-center hidden">
+        <h3 class="modal__title--small">Sair do Jogo?</h3>
+        <p class="modal__text">Seu progresso será perdido. Tem certeza?</p>
+        <div class="modal__actions">
+            <button id="quit-cancel-btn" class="btn btn--neutral">Não, Ficar</button>
+            <button id="quit-confirm-btn" class="btn btn--danger">Sim, Sair</button>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+        <button id="settings-modal-back-btn" class="modal__close-btn modal__close-btn--right">&times;</button>
+        <h3 class="modal__title--small text-center">Configurações</h3>
+        <div class="settings-list">
+            <div class="setting-item">
+                <span class="setting-item__label">Efeitos Sonoros</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="sound-toggle" class="toggle-switch__checkbox" checked/>
+                    <label for="sound-toggle" class="toggle-switch__label"></label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <span class="setting-item__label">Música</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="music-toggle" class="toggle-switch__checkbox" checked/>
+                    <label for="music-toggle" class="toggle-switch__label"></label>
+                </div>
+            </div>
+        </div>
+        <p class="credits-text">Feito com 💗 por Renato Neves, Augusto Itapoã, Fernanda Antunes, Heitor Rocha, Orlando Araújo e Matheus Alves.</p>
+    </div>
+
+    <audio id="music-player"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

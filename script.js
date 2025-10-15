@@ -6,6 +6,7 @@ const statesData = [
     { name: "Paraná", abbr: "PR", region: "Sul" }, { name: "Rio Grande do Sul", abbr: "RS", region: "Sul" }, { name: "Santa Catarina", abbr: "SC", region: "Sul" },
 ];
 
+const appContainer = document.getElementById("app-container");
 const startScreen = document.getElementById("start-screen");
 const gameScreen = document.getElementById("game-screen");
 const endScreen = document.getElementById("end-screen");
@@ -108,7 +109,21 @@ function toggleMusic() {
     }
 }
 
+function preloadNextImages() {
+    const nextIndex = currentIndex + 1;
+    if (nextIndex >= gameStates.length) return; 
+    const nextState = gameStates[nextIndex];
+    const normalModeImage = new Image();
+    normalModeImage.src = `flags/${nextState.abbr.toLowerCase()}.svg`;
+    const nextOptions = generateOptionSet(nextState);
+    nextOptions.forEach(option => {
+        const reverseModeImage = new Image();
+        reverseModeImage.src = `flags/${option.abbr.toLowerCase()}.svg`;
+    });
+}
+
 function startGame(region) {
+    appContainer.classList.add('in-game');
     if (region === "all") {
         gameStates = [...statesData];
     } else {
@@ -130,6 +145,7 @@ function startGame(region) {
     updateTriesDisplay();
     avgTimeDisplay.textContent = "0.0s";
     loadQuestion();
+    preloadNextImages();
 }
 
 function loadQuestion() {
@@ -156,6 +172,7 @@ function loadQuestion() {
         reverseModeOptions.classList.remove("hidden");
         generateOptionsReverse(currentState);
     }
+    preloadNextImages();
 }
 
 function generateOptionsNormal(correctState) {
@@ -231,7 +248,7 @@ function handleCorrectAnswer(button, grid) {
     setTimeout(() => {
         currentIndex++;
         loadQuestion();
-    }, 1500);
+    }, 300); 
 }
 
 function handleWrongAnswer(button, correctName, grid) {
@@ -268,7 +285,7 @@ function handleWrongAnswer(button, correctName, grid) {
         setTimeout(() => {
             currentIndex++;
             loadQuestion();
-        }, 2000);
+        }, 1200);
     }
 }
 
@@ -421,6 +438,7 @@ ingameBackBtn.addEventListener("click", () => {
 });
 
 quitConfirmBtn.addEventListener("click", () => {
+    appContainer.classList.remove('in-game');
     closeModal(quitModal);
     comboStreak = 0;
     updateComboDisplay();
@@ -434,7 +452,6 @@ quitCancelBtn.addEventListener("click", () => {
     resumeTimer();
 });
 
-settingsBtn.addEventListener("click", () => openModal(settingsModal));
 startScreenSettingsBtn.addEventListener("click", () => openModal(settingsModal));
 settingsModalBackBtn.addEventListener("click", () => closeModal(settingsModal));
 
@@ -457,6 +474,7 @@ modalOverlay.addEventListener("click", () => {
 });
 
 playAgainBtn.addEventListener("click", () => {
+    appContainer.classList.remove('in-game');
     endScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
     comboStreak = 0;

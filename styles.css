@@ -1,5 +1,11 @@
+html {
+    font-size: 120%;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
@@ -25,9 +31,6 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--color-slate-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
     padding: 1rem;
     margin: 0;
@@ -42,7 +45,13 @@ body {
     max-width: 42rem;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 2rem); 
 }
+
 
 .hidden {
     display: none !important;
@@ -66,6 +75,8 @@ body {
     border: 2px solid transparent;
     cursor: pointer;
     text-align: center;
+
+    font-size: 1rem;
 }
 
 .btn--primary {
@@ -192,7 +203,7 @@ body {
     gap: 1rem;
     margin-top: 2rem;
 }
-#play-again-btn, [data-type="marathon"] {
+#play-again-btn, [data-mode="marathon"] {
     margin-left: auto;
     margin-right: auto;
 }
@@ -200,22 +211,50 @@ body {
 #game-screen {
     max-width: 28rem;
     margin: auto;
+    width: 100%;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 90vh;
-    max-height: 800px;
 }
-.game-header { padding: 0.5rem 0; }
+
+.game-header { 
+    background-color: var(--color-white);
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 2px solid var(--color-slate-200);
+    box-shadow: 0 4px 0 0 var(--color-slate-200);
+}
+
 .game-status-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
 }
-#ingame-back-btn {
-   max-width: 70px;
+
+#ingame-back-btn, #settings-btn {
+    width: 2.75rem; 
+    height: 2.75rem; 
+    max-width: none; 
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
 }
+
+#ingame-back-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-slate-700);
+}
+
+#settings-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 .progress-bar {
     flex: 1 1 0%;
     background-color: var(--color-slate-200);
@@ -268,10 +307,6 @@ body {
     line-height: 1.75rem;
 }
 .settings-btn {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    background: transparent;
-    border: none;
     cursor: pointer;
 }
 .settings-btn:hover { background-color: var(--color-slate-200); }
@@ -295,6 +330,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 1rem;
 }
 .question-text {
     font-size: 1.5rem;
@@ -306,11 +342,13 @@ body {
 }
 .flag-container { display: flex; justify-content: center; }
 .flag-image {
-    height: 8rem;
+    height: clamp(10rem, calc(5rem + 15vw), 20rem);
     border-radius: 0.5rem;
     filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
-.options-section { padding-bottom: 1rem; }
+.options-section { 
+    padding-top: 1rem;
+}
 .options-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -320,6 +358,7 @@ body {
 
 #options-grid-normal button {
     width: 100%;
+    font-size: 1rem;
     font-family: inherit;
     font-weight: 700;
     padding: 1rem;
@@ -404,13 +443,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--color-white);
-    padding: 1.5rem;
+    padding: 1rem 1rem;
     border-radius: 1rem;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     z-index: 50;
-    width: calc(100% - 2rem);
-    max-height: 90vh;
-    overflow-y: auto;
+    width: calc(100% - 1rem);
 }
 .modal-overlay {
     position: fixed;
@@ -420,10 +457,17 @@ body {
     backdrop-filter: blur(4px);
     z-index: 40;
 }
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-right: 1rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.15rem;
+}
 .modal__close-btn {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
+    position: relative;
     padding: 0.5rem;
     border-radius: 0.5rem;
     background: transparent;
@@ -431,17 +475,17 @@ body {
     cursor: pointer;
     font-size: 1.5rem;
     line-height: 1;
+    z-index: 10;
 }
 .modal__close-btn:hover { background-color: var(--color-slate-100); }
-.modal__close-btn--right { left: auto; right: 1rem; }
+.modal__close-btn--right { order: 3; }
 
 .modal__title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
     font-weight: 700;
     color: var(--color-slate-800);
     text-align: center;
-    margin-bottom: 1rem;
+    width: 100%;
+    z-index: 1;
 }
 .modal__title--small {
     font-size: 1.25rem;
@@ -457,7 +501,7 @@ body {
 .modal__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: .5rem;
 }
 .modal__actions { display: flex; justify-content: center; gap: 1rem; }
 
@@ -467,7 +511,7 @@ body {
 
 .mode-card {
     cursor: pointer;
-    padding: 0.75rem;
+    padding: 0.5rem;
     border: 2px solid var(--color-slate-200);
     border-radius: 0.75rem;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -476,7 +520,7 @@ body {
     border-color: var(--color-sky-500);
     background-color: var(--color-sky-50);
 }
-.mode-card__title { font-weight: 700; font-size: 1.125rem; line-height: 1.5rem; color: var(--color-slate-800); }
+.mode-card__title { font-weight: 700; color: var(--color-slate-800); }
 .mode-card__description { font-size: 0.875rem; line-height: 1.25rem; color: var(--color-slate-600); margin-bottom: 0.75rem; }
 .mode-card__illustration {
     background-color: var(--color-slate-100);
@@ -485,8 +529,8 @@ body {
     border: 1px solid var(--color-slate-200);
 }
 .illustration__flag-placeholder {
-    height: 4rem;
-    width: 6rem;
+    height: 3rem;
+    width: 5rem;
     margin: auto;
     background-color: var(--color-white);
     border: 2px solid #ccc;
@@ -498,7 +542,6 @@ body {
     font-size: 0.875rem;
 }
 .illustration__text-placeholder {
-    height: 2rem;
     width: 10rem;
     margin: auto auto 1rem;
     background-color: var(--color-white);
@@ -576,25 +619,21 @@ body {
 }
 
 @media (min-width: 640px) {
-    .flag-image { height: 10rem; }
     .options-grid, .region-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .sm-hidden { display: block; }
 }
 
 @media (min-width: 768px) {
-    .flag-image { height: 14rem; }
-    .modal { padding: 2rem; }
+    .modal { padding: 1rem; }
     .modal__grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
     .modal__title {
         font-size: 1.5rem;
-        line-height: 2rem;
-        margin-bottom: 1.5rem;
     }
     .mode-card { padding: 1rem; }
-    .mode-card__title { font-size: 1.25rem; line-height: 1.75rem; }
+    .mode-card__title { font-size: 1.25rem; }
     .mode-card__illustration { padding: 1rem; }
     .illustration__flag-placeholder { height: 5rem; width: 8rem; }
     .illustration__option { height: 2rem; }

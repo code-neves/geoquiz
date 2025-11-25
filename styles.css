@@ -233,7 +233,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-#ingame-back-btn, #settings-btn {
+#ingame-back-btn {
     width: 2.75rem; 
     height: 2.75rem; 
     max-width: none; 
@@ -248,11 +248,6 @@ body {
     width: 1.5rem;
     height: 1.5rem;
     color: var(--color-slate-700);
-}
-
-#settings-btn svg {
-    width: 1.5rem;
-    height: 1.5rem;
 }
 
 .progress-bar {
@@ -306,10 +301,6 @@ body {
     font-size: 1.25rem;
     line-height: 1.75rem;
 }
-.settings-btn {
-    cursor: pointer;
-}
-.settings-btn:hover { background-color: var(--color-slate-200); }
 .stats-bar {
     text-align: center;
     color: var(--color-slate-500);
@@ -587,25 +578,6 @@ body {
     text-align: center;
 }
 
-.time-float {
-    position: absolute;
-    transform: translate(-50%, -100%);
-    animation: floatUp 1.5s ease-out forwards;
-    background-color: var(--color-green-600);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    pointer-events: none;
-    z-index: 100;
-}
-
-@keyframes floatUp {
-    from { opacity: 1; transform: translate(-50%, -100%); }
-    to { opacity: 0; transform: translate(-50%, -200%); }
-}
-
 @keyframes gradient-shine {
     from { background-position: 0% 50%; }
     to { background-position: 100% 50%; }
@@ -694,4 +666,67 @@ body {
 
 .text-red-600 {
     color: var(--color-red-600);
+}
+
+#info-modal {
+    max-width: 32rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-content {
+    background-color: var(--color-slate-100);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--color-slate-200);
+}
+
+.info-text {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--color-slate-700);
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.info-flag-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.info-flag-container img {
+    height: 4rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.modal__title--correct {
+    color: var(--color-green-600);
+}
+.modal__title--wrong {
+    color: var(--color-red-600);
+}
+
+/* --- RE-ADICIONADO: Pop-up de tempo (flutuante) --- */
+.time-float {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    animation: floatUp 1.5s ease-out forwards;
+    background-color: var(--color-green-600);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 100;
+}
+
+@keyframes floatUp {
+    from { opacity: 1; transform: translate(-50%, -100%); }
+    to { opacity: 0; transform: translate(-50%, -200%); }
 }

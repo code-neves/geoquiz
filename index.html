@@ -18,9 +18,9 @@
             <h1 class="start-screen__title">GeoQuiz Brasil</h1>
             <p class="start-screen__subtitle">Teste seus conhecimentos sobre as bandeiras do Brasil!</p>
             <div id="main-menu" class="main-menu">
-                 <button data-type="marathon" class="btn btn--primary solid-shadow">Jogar Maratona</button>
-                 <button data-type="region" class="btn btn--secondary solid-shadow">Jogar por Região</button>
-                 <button id="start-screen-settings-btn" class="btn btn--secondary solid-shadow">Configurações</button>
+                <button data-type="marathon" class="btn btn--primary solid-shadow">Modo Maratona</button>
+                <button data-type="learning" class="btn btn--secondary solid-shadow">Modo Aprendizado</button>
+                <button id="start-screen-settings-btn" class="btn btn--secondary solid-shadow">Configurações</button>
             </div>
         </div>
 
@@ -104,11 +104,11 @@
     <div id="mode-modal" class="modal hidden">
         <div class="modal__header">
             <button id="mode-modal-back-btn" class="modal__close-btn">&times;</button>
-            <h3 class="modal__title">Escolha o Modo</h3>
+            <h3 class="modal__title">Escolha o Estilo</h3>
         </div>
         <div class="modal__grid">
             <div id="mode-normal-btn" class="mode-card">
-                <h4 class="mode-card__title">Modo Normal</h4>
+                <h4 class="mode-card__title">Estilo Padrão</h4>
                 <p class="mode-card__description">Adivinhe o nome do estado pela bandeira.</p>
                 <div class="mode-card__illustration">
                     <div class="illustration__flag-placeholder">Bandeira</div>
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div id="mode-reverse-btn" class="mode-card">
-                <h4 class="mode-card__title">Modo Reverso</h4>
+                <h4 class="mode-card__title">Estilo Reverso</h4>
                 <p class="mode-card__description">Adivinhe a bandeira pelo nome do estado.</p>
                 <div class="mode-card__illustration">
                     <div class="illustration__text-placeholder">Nome do Estado</div>
@@ -136,18 +136,17 @@
         </div>
     </div>
 
-    <div id="region-modal" class="modal hidden">
-        <div class="modal__header">
-            <button id="region-modal-back-btn" class="modal__close-btn">&times;</button>
-            <h3 class="modal__title">Escolha uma Região</h3>
+    <div id="info-modal" class="modal hidden text-center">
+        <h3 id="info-modal-title" class="modal__title--small">Você sabia?</h3>
+        
+        <div class="info-content">
+            <div id="info-flag-container" class="info-flag-container hidden">
+                <img id="info-flag-img" src="" alt="Bandeira" />
+            </div>
+            <p id="info-modal-text" class="modal__text info-text"></p>
         </div>
-        <div id="modal-region-selection" class="region-grid">
-            <button data-region="Norte" class="btn btn--secondary solid-shadow">Norte</button>
-            <button data-region="Nordeste" class="btn btn--secondary solid-shadow">Nordeste</button>
-            <button data-region="Centro-Oeste" class="btn btn--secondary solid-shadow">Centro-Oeste</button>
-            <button data-region="Sudeste" class="btn btn--secondary solid-shadow">Sudeste</button>
-            <button data-region="Sul" class="btn btn--secondary solid-shadow">Sul</button>
-        </div>
+
+        <button id="info-next-btn" class="btn btn--primary solid-shadow">Próximo</button>
     </div>
 
     <div id="quit-modal" class="modal text-center hidden">
@@ -172,18 +171,10 @@
                     <label for="sound-toggle" class="toggle-switch__label"></label>
                 </div>
             </div>
-            <div class="setting-item">
-                <span class="setting-item__label">Música</span>
-                <div class="toggle-switch">
-                    <input type="checkbox" id="music-toggle" class="toggle-switch__checkbox" checked/>
-                    <label for="music-toggle" class="toggle-switch__label"></label>
-                </div>
-            </div>
         </div>
         <p class="credits-text">Feito com 💗 por Renato Neves, Augusto Itapoã, Fernanda Antunes, Heitor Rocha, Orlando Araújo e Matheus Alves.</p>
     </div>
 
-    <audio id="music-player"></audio>
     <script src="script.js"></script>
 </body>
 </html>

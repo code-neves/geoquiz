@@ -730,3 +730,52 @@ body {
     from { opacity: 1; transform: translate(-50%, -100%); }
     to { opacity: 0; transform: translate(-50%, -200%); }
 }
+
+.qr-code, #ufrpe {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    #ufrpe{
+            display: block; 
+            position: absolute;
+            
+            inset: 1rem auto auto 1rem;
+            
+            
+            width: 12vw;        
+            max-width: 80px;  
+            min-width: 50px;   
+            height: auto;      
+            
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            opacity: 0.9;
+            z-index: 0;
+    }
+    
+    #app-container {
+        position: relative;
+    }
+
+    .qr-code {
+        display: block; 
+        position: absolute;
+        
+        inset: auto 2rem auto auto;
+        
+        
+        width: 18vw;        
+        max-width: 420px;  
+        min-width: 150px;   
+        height: auto;      
+        
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        opacity: 0.9;
+        z-index: 0;
+    }
+   
+    #app-container.in-game .qr-code ,
+    #app-container.in-game #ufrpe {
+        display: none;
+    }
+}
